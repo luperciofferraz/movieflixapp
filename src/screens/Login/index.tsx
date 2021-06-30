@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import { styles } from './styles';
 
 export function Login() {
@@ -7,7 +7,7 @@ export function Login() {
     return (
 
         <View>
-
+            <Text>Login</Text>
         </View>
 
     );

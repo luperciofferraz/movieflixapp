@@ -2,12 +2,12 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import { styles } from './styles';
 
-export function Header() {
+export function Navbar() {
 
     return (
 
         <View>
-            <Text>Header</Text>
+            <Text>Navbar</Text>
         </View>
 
     );

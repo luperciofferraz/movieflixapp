@@ -1,12 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import { theme } from '../global/styles/theme';
 import { Home } from '../screens/Home';
 import { Login } from '../screens/Login';
 import { Details } from '../screens/Details';
 import { Catalog } from '../screens/Catalog';
-import { Header } from '../components/Header';
+import { Navbar } from '../components/Navbar';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -15,13 +14,13 @@ export function AppRoutes() {
     return (
 
         <Navigator
-        
-            headerMode='none'
+            
+            initialRouteName="Home"
+            headerMode='screen'
             screenOptions={{
-                cardStyle: {
-                    backgroundColor: theme.colors.amarelo
-                },
-                header: () => <Header />
+                headerStyle: { backgroundColor: theme.colors.amarelo },
+                header: () => <Navbar />,
+                headerTintColor: theme.colors.cinzaEscuro
             }}
         
         >
@@ -29,21 +28,33 @@ export function AppRoutes() {
             <Screen 
                 name="Home"
                 component={Home}
+                options={{
+                    title: 'Home',
+                }}
             />
 
             <Screen 
                 name="Login"
                 component={Login}
+                options={{
+                    title: 'Login',
+                }}
             />
 
             <Screen 
                 name="Details"
                 component={Details}
+                options={{
+                    title: 'Details',
+                }}
             />
 
             <Screen 
                 name="Catalog"
                 component={Catalog}
+                options={{
+                    title: 'Catalog',
+                }}
             />
 
         </Navigator>
