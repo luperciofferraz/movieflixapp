@@ -3,7 +3,7 @@ import queryString from "query-string";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface AuthProps {
-  username: string;
+  email: string;
   password: string;
 }
 

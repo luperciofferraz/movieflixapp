@@ -17,7 +17,7 @@ export function Login() {
   const [userData, setUserData] = useState({});
 
   const [userInfo, setUserInfo] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -44,10 +44,10 @@ export function Login() {
             autoCapitalize="none"
             keyboardType="email-address"
             style={styles.textInput}
-            value={userInfo.username}
+            value={userInfo.email}
             onChangeText={(e) => {
               const newUserInfo = { ...userInfo };
-              newUserInfo.username = e;
+              newUserInfo.email = e;
               setUserInfo(newUserInfo);
             }}
           />
@@ -72,7 +72,7 @@ export function Login() {
             >
               <Image
                 source={hidePassword ? eyesOpened : eyesClosed}
-                style={{ width: 32, height: 32 }}
+                style={{ width: 35, height: 23 }}
               />
             </TouchableOpacity>
 
