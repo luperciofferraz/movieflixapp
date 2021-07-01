@@ -15,12 +15,12 @@ export function AppRoutes() {
 
         <Navigator
             
-            initialRouteName="Home"
-            headerMode='screen'
             screenOptions={{
-                headerStyle: { backgroundColor: theme.colors.amarelo },
-                header: () => <Navbar />,
-                headerTintColor: theme.colors.cinzaEscuro
+                headerTitle: '',
+                headerStyle: { 
+                    backgroundColor: theme.colors.amarelo 
+                },
+                header: () => <Navbar />
             }}
         
         >

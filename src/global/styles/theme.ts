@@ -8,6 +8,8 @@ export const theme = {
         cinzaMedioClaro: '#9E9E9E',
         cinzaClaro: '#CDCDCD',
         branco: '#FFFFFF',
+        preto: '#000000',
+        subtitle: '#F2F2F2',
         cinzaBotao: 'rgba(38, 50, 56, 0.5)'
 
     },

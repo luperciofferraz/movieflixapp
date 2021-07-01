@@ -12,26 +12,23 @@ export function Home() {
     
     return (
 
-        <View>
+        <View style={styles.container}>
 
-            <View>
+            <Image source={HomeImg} />
+
+            <View style={styles.textContainer}>
             
-                <Image source={HomeImg} />
+                <Text style={styles.title}>Avalie Filmes</Text>
 
-                <View>
-                
-                    <Text>Avalie Filmes</Text>
-
-                    <Text>Diga o que você achou do seu {'\n'} filme favorito</Text>
-                
-                </View>
-                
-                <ButtonIcon 
-                    text="INICIE AGORA A SUA BUSCA"
-                    handleOnPress={handleSearchMovies}   
-                />
-
+                <Text style={styles.subtitle}>Diga o que você achou do seu {'\n'} filme favorito</Text>
+            
             </View>
+            
+            <ButtonIcon 
+                text="FAZER LOGIN"
+                activeOpacity={0.8}
+                handleOnPress={handleSearchMovies}   
+            />
     
         </View>
 
