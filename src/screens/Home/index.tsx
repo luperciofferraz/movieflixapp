@@ -7,7 +7,10 @@ import { styles } from './styles';
 
 export function Home() {
 
+    const navigation = useNavigation();
+
     function handleSearchMovies() {
+        navigation.navigate('Login');
     }
     
     return (

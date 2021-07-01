@@ -10,8 +10,7 @@ export default function App() {
     <NavigationContainer>
         
       <StatusBar 
-        barStyle="dark-content"
-        backgroundColor="transparent"
+        barStyle="light-content"
         translucent
       />
 
