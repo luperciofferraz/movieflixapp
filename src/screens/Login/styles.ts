@@ -33,11 +33,6 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
     },
-    
-    textContainer: {
-        marginTop: 40,
-        paddingHorizontal: 20,
-    },
 
     title: {
         fontSize: 30,
@@ -47,15 +42,6 @@ export const styles = StyleSheet.create({
         color: theme.colors.branco,
         marginBottom: 50,
         letterSpacing: -0.015
-    },
-
-    subtitle: {
-        fontSize: 16,
-        fontWeight: '400',
-        textAlign: 'center',
-        color: theme.colors.subtitle,
-        marginBottom: 50
-    
     }
 
 })

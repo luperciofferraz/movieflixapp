@@ -3,10 +3,10 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const api = axios.create({
-  baseURL: "https://localhost:8080/",
+  baseURL: "http://192.168.1.69:8080/",
 });
 
-export const TOKEN = "Basic ZHNjYXRhbG9nOmRzY2F0YWxvZzEyMw==";
+export const TOKEN = "Basic bW92aWVmbGl4Om1vdmllZmxpeDEyMw==";
 
 export async function userToken() {
   const token = await AsyncStorage.getItem("@token");

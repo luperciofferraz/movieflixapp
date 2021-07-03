@@ -17,7 +17,7 @@ export function Login() {
   const [userData, setUserData] = useState({});
 
   const [userInfo, setUserInfo] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -44,10 +44,10 @@ export function Login() {
             autoCapitalize="none"
             keyboardType="email-address"
             style={styles.textInput}
-            value={userInfo.email}
+            value={userInfo.username}
             onChangeText={(e) => {
               const newUserInfo = { ...userInfo };
-              newUserInfo.email = e;
+              newUserInfo.username = e;
               setUserInfo(newUserInfo);
             }}
           />
