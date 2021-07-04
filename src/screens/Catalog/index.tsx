@@ -3,8 +3,9 @@ import {
   FlatList, View, Text
 } from "react-native";
 import { makeRequest } from '../../services/requests';
+import { Filter } from '../../components/Filter';
 
-import { Genre, MoviesResponse } from '../../types/Movie'
+import { Genre, MoviesResponse } from '../../types'
 
 export function Catalog() {
 
@@ -44,16 +45,25 @@ export function Catalog() {
 
     return    (
 
-      <FlatList
-        data={moviesResponse?.content}
-        keyExtractor={ item => item.id.toString()}
-        renderItem={ ({ item }) => (
-            <View>
-                <Text>{item.title}</Text>
-            </View> 
-        )}
-        showsVerticalScrollIndicator={false}
-      />
+        <View>
+
+            <Filter 
+                genre={genre} 
+                handleChangeGenre={handleChangeGenre}
+            />
+
+            <FlatList
+                data={moviesResponse?.content}
+                keyExtractor={ item => item.id.toString()}
+                renderItem={ ({ item }) => (
+                    <View>
+                        <Text>{item.title}</Text>
+                    </View> 
+                )}
+                showsVerticalScrollIndicator={false}
+            />
+
+        </View>
 
     )
 
