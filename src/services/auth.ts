@@ -1,37 +1,61 @@
-import { api, TOKEN } from "./index";
-import queryString from "query-string";
+import jwtDecode from 'jwt-decode';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-interface AuthProps {
+export const TOKEN = "Basic bW92aWVmbGl4Om1vdmllZmxpeDEyMw==";
+
+export type Role = 'ROLE_VISITOR' | 'ROLE_MEMBER';
+
+export type LoginResponse = {
+
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  scope: string;
+  name: string;
+  userId: number;
+
+}
+
+export type AccesToken = {
+
+  exp: number;
+  user_name: string;
+  authorities: Role[];
+
+}
+
+export type LoginData = {
+
   username: string;
   password: string;
+
 }
 
-interface KeyProps {
-  key: string;
-  value: string;
-}
-
-export async function login(userInfo: AuthProps) {
+export async function userToken() {
   
-  const data = queryString.stringify({ ...userInfo, grant_type: "password" });
+  const { access_token } = await getSessionData();
+  
+  return access_token;
+}
 
-  const result = await api.post("oauth/token", data, {
-    headers: {
-      Authorization: TOKEN,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  });
 
-  const { access_token } = result.data;
+export async function getSessionData() {
 
-  setAsyncKeys("@token", access_token);
+  const sessionData = await AsyncStorage.getItem('authData') ?? '{}';
 
-  return result;
+  const parsedSessionData = JSON.parse(sessionData);
+
+  return parsedSessionData as LoginResponse;
 
 }
 
-async function setAsyncKeys(key: string, value: string) {
+export async function saveSessionData(loginResponse: LoginResponse) {
+
+  setAsyncKeys('authData', JSON.stringify(loginResponse));
+
+}
+
+export async function setAsyncKeys(key: string, value: string) {
   
   try {
     
@@ -43,11 +67,44 @@ async function setAsyncKeys(key: string, value: string) {
   }
 }
 
+export async function getAccessTokenDecoded() {
+
+  const sessionData = await getSessionData();
+
+  try {
+
+      const tokenDecoded = jwtDecode(sessionData.access_token);
+      return tokenDecoded as AccesToken;
+
+  }
+  catch (error) {
+
+      return {} as AccesToken;
+  }    
+}
+
+export async function isTokenValid() {
+
+  const { exp } = await getAccessTokenDecoded();
+
+  return (Date.now() <= exp * 1000);
+
+}
+
+export async function isAuthenticated() {
+
+  const sessionData = await getSessionData();
+
+  return sessionData.access_token && isTokenValid();
+
+}
+
+
 export async function isAutenticated() {
   
   try {
     
-    const token = await AsyncStorage.getItem("@token");
+    const token = await AsyncStorage.getItem('authData');
 
     return token ? true : false;
 
@@ -62,7 +119,7 @@ export async function doLogout() {
   
   try {
   
-    AsyncStorage.removeItem("@token");
+    AsyncStorage.removeItem('authData');
     
   } catch (e) {
     
@@ -72,8 +129,7 @@ export async function doLogout() {
 }
 
 const requests = {
-  login,
-  isAutenticated,
+  isAutenticated
 };
 
 export default requests;

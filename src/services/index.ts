@@ -1,25 +1,15 @@
 import axios from "axios";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { userToken } from './auth';
 
 export const api = axios.create({
   baseURL: "http://192.168.1.69:8080/",
 });
 
-export const TOKEN = "Basic bW92aWVmbGl4Om1vdmllZmxpeDEyMw==";
-
-export async function userToken() {
-  const token = await AsyncStorage.getItem("@token");
-  return token;
-}
-
 export async function getGenres() {
   
-  const authToken = await userToken();
-
-  const res = api.get(`/genres?page=0&direction=ASC&orderBy=name`, {
+  const res = api.get(`/genres`, {
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${userToken}`,
     },
   });
 
@@ -32,7 +22,7 @@ export async function getMovies() {
   
   const res = api.get(`/movies`, {
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${userToken}`,
     },
   });
 
@@ -45,7 +35,7 @@ export async function getMovie(id: number) {
 
   const res = await api.get(`/movies/${id}`, {
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${userToken}`,
     },
   });
     
@@ -58,7 +48,7 @@ export async function createReview(data: object) {
   
   const res = api.post(`/reviews`, data, {
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${userToken}`,
     },
   });
 
