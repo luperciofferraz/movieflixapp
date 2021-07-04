@@ -1,56 +1,21 @@
-import axios from "axios";
-import { userToken } from './auth';
+import { TOKEN, removeSessionData, LoginData } from './auth';
+import { makeRequest } from './requests';
+import queryString from "query-string";
 
-export const api = axios.create({
-  baseURL: "http://192.168.1.69:8080/",
-});
-
-export async function getGenres() {
+export function login(loginData: LoginData) {
   
-  const res = api.get(`/genres`, {
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  });
+  const headers = {
+    Authorization: TOKEN,
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
 
-  return res;
+  const payload = queryString.stringify({ ...loginData, grant_type: "password" });
+  return makeRequest({ method: 'POST', url: '/oauth/token', data: payload, headers });
 }
 
-export async function getMovies() {
-  
-  const authToken = await userToken();
-  
-  const res = api.get(`/movies`, {
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  });
+export function logout() {
 
-  return res;
+  removeSessionData();
+
 }
 
-export async function getMovie(id: number) {
-  
-  const authToken = await userToken();
-
-  const res = await api.get(`/movies/${id}`, {
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  });
-    
-  return res;
-}
-
-export async function createReview(data: object) {
-  
-  const authToken = await userToken();
-  
-  const res = api.post(`/reviews`, data, {
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  });
-
-  return res;
-}

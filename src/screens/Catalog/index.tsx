@@ -1,42 +1,31 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
-  ScrollView,
-  ActivityIndicator,
+  FlatList, View, Text
 } from "react-native";
+import { makeRequest } from '../../services/requests';
 
-import './styles.scss';
 import { Genre, MoviesResponse } from '../../types/Movie'
 
-const Movies = () => {
+export function Catalog() {
 
     const [moviesResponse, setMoviesResponse] = useState<MoviesResponse>();
-    
-    const [isLoading, setIsLoading] = useState(false);
     const [activePage, setActivePage] = useState(0);
     const [genre, setGenre] = useState<Genre>();
 
     const getMovies = useCallback(()=> {
 
         const params = {
-            page: activePage,
-            linesPerPage: 8,
+            page: 0,
             genreId: genre?.id
         }
 
-        setIsLoading(true);
-
         makeRequest({ url: '/movies', params })
            
-            .then(response => {
+        .then(response => {
 
-                setMoviesResponse(response.data)
-            
-            })
-            .finally(() => {
-
-                setIsLoading(false) 
-
-            });
+            setMoviesResponse(response.data)
+        
+        });
 
     }, [activePage, genre]);
 
@@ -55,29 +44,18 @@ const Movies = () => {
 
     return    (
 
-      <ScrollView contentContainerStyle={theme.scrollContainer}>
-
-        <SearchInput
-          placeholder="Nome do produto"
-          search={search}
-          setSearch={setSearch}
-        />
-
-        {loading ? (
-          
-          <ActivityIndicator size="large" />
-
-        ) : (
-          
-          data.map((product) => <ProductCard key={product.id} {...product} />)
-
+      <FlatList
+        data={moviesResponse?.content}
+        keyExtractor={ item => item.id.toString()}
+        renderItem={ ({ item }) => (
+            <View>
+                <Text>{item.title}</Text>
+            </View> 
         )}
-
-      </ScrollView>
+        showsVerticalScrollIndicator={false}
+      />
 
     )
 
 };
-
-export default Movies;
 

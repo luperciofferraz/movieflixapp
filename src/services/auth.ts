@@ -49,17 +49,17 @@ export async function getSessionData() {
 
 }
 
-export async function saveSessionData(loginResponse: LoginResponse) {
+export function saveSessionData(loginResponse: LoginResponse) {
 
   setAsyncKeys('authData', JSON.stringify(loginResponse));
 
 }
 
-export async function setAsyncKeys(key: string, value: string) {
+export function setAsyncKeys(key: string, value: string) {
   
   try {
     
-    await AsyncStorage.setItem(key, value);
+    AsyncStorage.setItem(key, value);
 
   } catch (e) {
     
@@ -99,23 +99,7 @@ export async function isAuthenticated() {
 
 }
 
-
-export async function isAutenticated() {
-  
-  try {
-    
-    const token = await AsyncStorage.getItem('authData');
-
-    return token ? true : false;
-
-  } catch (e) {
-    
-    console.warn(e);
-
-  }
-}
-
-export async function doLogout() {
+export function removeSessionData() {
   
   try {
   
@@ -128,8 +112,3 @@ export async function doLogout() {
   }
 }
 
-const requests = {
-  isAutenticated
-};
-
-export default requests;

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Text, View, TouchableOpacity, Image, TextInput } from "react-native";
-import { login } from '../../services/auth';
+import { login } from '../../services';
 
 import eyesOpened from '../../assets/eyes-opened.png';
 import eyesClosed from '../../assets/eyes-closed.png';
 import { ButtonIcon } from "../../components/ButtonIcon";
 import { styles } from "./styles";
+import { saveSessionData } from "../../services/auth";
 
 export function Login() {
   
@@ -14,20 +15,18 @@ export function Login() {
 
   const [hidePassword, setHidePassword] = useState(true);
   
-  const [userData, setUserData] = useState({});
-
   const [userInfo, setUserInfo] = useState({
     username: "",
     password: "",
   });
 
-  async function handleLogin() {
+  function handleLogin() {
     
-    const data = await login(userInfo);
-    
-    setUserData(data);
-    
-    navigation.navigate('Catalog');
+    login(userInfo)
+      .then(response => {
+        saveSessionData(response.data);
+        navigation.navigate('Catalog');
+      });
 
   }
 
