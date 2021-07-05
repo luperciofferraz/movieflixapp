@@ -6,13 +6,12 @@ import { makePrivateRequest } from '../../services/requests';
 import { Genre } from '../../types';
 
 type Props = {
-    genre?: Genre;
     handleChangeGenre: (genre: Genre) => void; 
 }
 
-export function Filter({ genre, handleChangeGenre }: Props) {
+export function Filter({ handleChangeGenre }: Props) {
 
-    const [selectedGenre, setSelectedGenre] = useState();
+    const [selectedGenre, setSelectedGenre] = useState<Genre>();
     const [genres, setGenres] = useState<Genre[]>([]);
 
     useEffect( () => {
@@ -32,14 +31,16 @@ export function Filter({ genre, handleChangeGenre }: Props) {
 
         <Picker
             selectedValue={selectedGenre}
-            onValueChange={(itemValue, itemIndex) =>
-                setSelectedGenre(itemValue)
+            onValueChange={(itemValue, itemIndex) => {
+                setSelectedGenre(itemValue);
+                handleChangeGenre(itemValue);
+            }
             }>
             
             {
                 genres.map( genre => (
 
-                    <Picker.Item key={genre.id} label={genre.name} value={genre.id} />
+                    <Picker.Item key={genre.id} label={genre.name} value={genre} />
 
                 ))
             }   

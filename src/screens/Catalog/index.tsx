@@ -6,6 +6,7 @@ import { makeRequest } from '../../services/requests';
 import { Filter } from '../../components/Filter';
 
 import { Genre, MoviesResponse } from '../../types'
+import { Card } from '../../components/Card';
 
 export function Catalog() {
 
@@ -37,9 +38,7 @@ export function Catalog() {
     }, [getMovies]);
 
     const handleChangeGenre = (genre: Genre) => {
-        
         setActivePage(0);
-        
         setGenre(genre);
     }
 
@@ -48,7 +47,6 @@ export function Catalog() {
         <View>
 
             <Filter 
-                genre={genre} 
                 handleChangeGenre={handleChangeGenre}
             />
 
@@ -56,9 +54,7 @@ export function Catalog() {
                 data={moviesResponse?.content}
                 keyExtractor={ item => item.id.toString()}
                 renderItem={ ({ item }) => (
-                    <View>
-                        <Text>{item.title}</Text>
-                    </View> 
+                    <Card movie={item} />
                 )}
                 showsVerticalScrollIndicator={false}
             />
