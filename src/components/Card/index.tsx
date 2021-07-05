@@ -12,19 +12,19 @@ export function Card({ movie, ...rest } : Props) {
 
   const navigation = useNavigation();
   
+  const movieId = movie.id;
+
   function handleOnPress()  {
 
-    navigation.navigate('Details', { movie });
+    navigation.navigate('Details', { movieId });
 
   }
 
   return (
 
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={() => handleOnPress()}
-        {...rest}
-      >
+      
+      <View>
+      
         <Image
           source={{ uri: movie.imgUrl }}
           style={{ width: 140, height: 140, margin: 16 }}
@@ -38,7 +38,15 @@ export function Card({ movie, ...rest } : Props) {
           <Text>{movie.subTitle}</Text>
         </View>
 
-      </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => handleOnPress()}
+          {...rest}
+        >
+          <Text>VER DETALHES</Text>
+        </TouchableOpacity>
+
+      </View>
 
   );
 }

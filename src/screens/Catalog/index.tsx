@@ -11,13 +11,11 @@ import { Card } from '../../components/Card';
 export function Catalog() {
 
     const [moviesResponse, setMoviesResponse] = useState<MoviesResponse>();
-    const [activePage, setActivePage] = useState(0);
     const [genre, setGenre] = useState<Genre>();
 
     const getMovies = useCallback(()=> {
 
         const params = {
-            page: 0,
             genreId: genre?.id
         }
 
@@ -29,7 +27,7 @@ export function Catalog() {
         
         });
 
-    }, [activePage, genre]);
+    }, [genre]);
 
     useEffect( () => {
         
@@ -38,7 +36,6 @@ export function Catalog() {
     }, [getMovies]);
 
     const handleChangeGenre = (genre: Genre) => {
-        setActivePage(0);
         setGenre(genre);
     }
 

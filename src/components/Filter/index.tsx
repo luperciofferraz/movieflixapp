@@ -31,7 +31,7 @@ export function Filter({ handleChangeGenre }: Props) {
 
         <Picker
             selectedValue={selectedGenre}
-            onValueChange={(itemValue, itemIndex) => {
+            onValueChange={(itemValue) => {
                 setSelectedGenre(itemValue);
                 handleChangeGenre(itemValue);
             }
@@ -39,7 +39,7 @@ export function Filter({ handleChangeGenre }: Props) {
             
             {
                 genres.map( genre => (
-
+                    
                     <Picker.Item key={genre.id} label={genre.name} value={genre} />
 
                 ))

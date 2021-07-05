@@ -110,5 +110,18 @@ export function removeSessionData() {
     console.warn(e);
 
   }
+
+  
 }
 
+export async function isAllowedByRole(routeRoles: Role[] = []) {
+
+  if (routeRoles.length === 0) {
+      return true;
+  }
+
+  const { authorities } = await getAccessTokenDecoded();
+
+  return routeRoles.some( role => authorities?.includes(role));
+
+}
