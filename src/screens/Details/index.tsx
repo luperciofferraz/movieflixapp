@@ -3,8 +3,9 @@ import { View, Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Movie, Review } from '../../types';
 import { makePrivateRequest } from '../../services/requests';
+import { isAllowedByRole } from '../../services/auth';
 import { DetailCard } from '../../components/DetailCard';
-import { TextArea } from '../../components/TextArea';
+import { Form } from '../../components/Form';
 
 type ParamsType = {
     movieId: string;
@@ -21,10 +22,13 @@ export function Details() {
 
     const getReviews = useCallback(() => {
 
+        console.warn(movieId);
+
         makePrivateRequest({ url: `/movies/${movieId}` })
         
         .then(response => 
             {
+                console.log(response.data);
                 setMovie(response.data);
                 setListaReviews(response.data.reviews);
             }
@@ -46,12 +50,9 @@ export function Details() {
                 movie={movie}
             />
 
-            <TextArea 
-                multiline
-                maxLength={100}
-                numberOfLines={5}
-                autoCorrect={false}
-                onChangeText={setDescription}
+            <Form 
+                listaReviews = {listaReviews}
+                setListaReviews = {setListaReviews}
             />
 
             {listaReviews?.length ?

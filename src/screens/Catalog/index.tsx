@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  FlatList, View, Text
+  FlatList, View
 } from "react-native";
 import { makeRequest } from '../../services/requests';
 import { Filter } from '../../components/Filter';
