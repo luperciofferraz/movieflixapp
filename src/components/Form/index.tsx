@@ -38,13 +38,18 @@ export function Form( {listaReviews, setListaReviews}: ParamsForm) {
         data.userId = userId;
 
         makePrivateRequest({ url: '/reviews', method: 'POST', data })
-        .then(response => 
-        {
-                listaRetorno = [];
-                listaReviews?.map(review => listaRetorno.push(review));
-                listaRetorno.push(response.data);
-                setListaReviews(listaRetorno);
-        }).catch(response => { console.log('ERRO') });
+        .then(response => {
+          
+          listaRetorno = [];
+          listaReviews?.map(review => listaRetorno.push(review));
+          listaRetorno.push(response.data);
+          setListaReviews(listaRetorno);
+          
+        }).catch(response => { 
+        
+          console.log('ERRO') 
+
+        });
 
     };
 

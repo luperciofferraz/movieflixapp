@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Movie, Review } from '../../types';
 import { makePrivateRequest } from '../../services/requests';
 import { DetailCard } from '../../components/DetailCard';
 import { Form } from '../../components/Form';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type ParamsType = {
     movieId: string;
@@ -52,24 +53,26 @@ export function Details() {
 
             {listaReviews?.length ?
 
-            <View>
-
-                {listaReviews?.map( review => (
-                    <View key={review.id}>
-                        <View>
-                            <Text>
-                                {review.user.name}
-                            </Text>
-                        </View>
-                        <Text>
-                            {review.text}
-                        </Text>
-                    </View>
-                ))}
-
-            </View>
-
-            : <></>
+                <SafeAreaView>
+                    <FlatList
+                        data={listaReviews}
+                        keyExtractor={ item => item.id.toString()}
+                        renderItem={ ({ item }) => (
+                            <View key={item.id}>
+                                <View>
+                                    <Text>
+                                        {item.user.name}
+                                    </Text>
+                                </View>
+                                <Text>
+                                    {item.text}
+                                </Text>
+                            </View>
+                        )}
+                        showsVerticalScrollIndicator={true}
+                    />
+                </SafeAreaView>
+                : <></>
 
             }
 

@@ -30,13 +30,17 @@ export function Filter({ handleChangeGenre }: Props) {
     return (
 
         <Picker
+            
             selectedValue={selectedGenre}
+            mode='dropdown'
             onValueChange={(itemValue) => {
                 setSelectedGenre(itemValue);
                 handleChangeGenre(itemValue);
             }
             }>
             
+            <Picker.Item key={0} label='Selecione' value={0} />
+
             {
                 genres.map( genre => (
                     
