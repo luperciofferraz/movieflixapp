@@ -6,6 +6,8 @@ import { makePrivateRequest } from '../../services/auth';
 import { DetailCard } from '../../components/DetailCard';
 import { Form } from '../../components/Form';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { styles } from './styles';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type ParamsType = {
     movieId: string;
@@ -40,7 +42,7 @@ export function Details() {
 
     return (
 
-        <View>
+        <ScrollView style={styles.container}>
             
             <DetailCard 
                 movie={movie}
@@ -53,7 +55,8 @@ export function Details() {
 
             {listaReviews?.length ?
 
-                <SafeAreaView>
+                <View>
+
                     <FlatList
                         data={listaReviews}
                         keyExtractor={ item => item.id.toString()}
@@ -71,12 +74,14 @@ export function Details() {
                         )}
                         showsVerticalScrollIndicator={true}
                     />
-                </SafeAreaView>
+
+                </View>
+
                 : <></>
 
             }
 
-        </View>
+        </ScrollView>
 
     );
 

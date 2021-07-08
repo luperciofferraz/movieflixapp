@@ -2,20 +2,17 @@ import { StyleSheet } from 'react-native';
 import { theme } from '../../global/styles/theme';
 
 export const styles = StyleSheet.create({
+    
+    textInput: {
 
-    container: {
-        width: '100%',
-        height: 95,
-        backgroundColor: theme.colors.secondary40,
-        color: theme.colors.heading,
-        borderRadius: 8,
-        fontFamily: theme.fonts.text400,
+        backgroundColor: theme.colors.branco,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderRadius: 10,
         fontSize: 13,
-        marginRight: 4,
-        borderWidth: 1,
-        borderColor: theme.colors.secondary50,
-        paddingHorizontal: 16,
-        paddingTop: 16,
-        textAlignVertical: 'top'
-    },
+        color: theme.colors.cinzaMedioClaro,
+        textAlignVertical: 'top',
+        marginBottom: 15
+
+    }
 });

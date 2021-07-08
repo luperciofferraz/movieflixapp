@@ -15,6 +15,7 @@ export const theme = {
         branco: '#FFFFFF',
         preto: '#000000',
         subtitle: '#F2F2F2',
+        borderDetailsColor: '#E1E1E1',
         cinzaBotao: 'rgba(38, 50, 56, 0.5)'
 
     },

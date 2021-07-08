@@ -3,7 +3,6 @@ import { Text, View, Image, TouchableOpacity, TouchableOpacityProps } from 'reac
 import { useNavigation } from "@react-navigation/native";
 import { styles } from './styles';
 import { Movie } from '../../types';
-import { RectButton } from 'react-native-gesture-handler';
 
 type Props = TouchableOpacityProps & {
     movie: Movie;

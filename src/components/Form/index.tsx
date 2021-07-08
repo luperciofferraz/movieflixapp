@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Button, Text } from 'react-native'; 
+import { View, Text } from 'react-native'; 
 import { makePrivateRequest } from '../../services/auth';
 import { useForm, Controller } from 'react-hook-form';
 import { useRoute } from '@react-navigation/native';
 import { getSessionData } from '../../services/auth';
 import { Review } from '../../types';
 import { TextArea } from '../../components/TextArea';
+import { styles } from './styles';
+import { Button } from '../Button';
 
 export type ReviewData = {
     text: string;
@@ -55,31 +57,34 @@ export function Form( {listaReviews, setListaReviews}: ParamsForm) {
 
     return (
 
-      <View>
+      <View style={styles.container}>
 
-      <Controller
-        control={control}
-        rules={{
-         maxLength: 100,
-        }}
-        render={({ field: { onChange, value } }) => (
-          <TextArea 
-            multiline
-            maxLength={100}
-            numberOfLines={5}
-            autoCorrect={false}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="text"
-        defaultValue=""
-      />
-      
-      {errors.review && <Text>This is required.</Text>}
+        <Controller
+          control={control}
+          rules={{
+          maxLength: 100,
+          }}
+          render={({ field: { onChange, value } }) => (
+            <TextArea 
+              multiline
+              maxLength={100}
+              numberOfLines={5}
+              autoCorrect={false}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="text"
+          defaultValue=""
+        />
+        
+        {errors.review && <Text>This is required.</Text>}
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+        <Button 
+          handleOnPress={handleSubmit(onSubmit)}
+          text="SALVAR AVALIAÇÃO"
+        />
 
-    </View>
+      </View>
   );
 };

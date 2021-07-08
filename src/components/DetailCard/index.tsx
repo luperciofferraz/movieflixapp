@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, Image } from 'react-native';
 import { Movie } from '../../types';
+import { styles } from './styles';
 
 type Props = {
   movie?: Movie;
@@ -10,34 +11,32 @@ export function DetailCard({ movie } : Props) {
 
   return (
       
-      <View>
+    <View style={styles.container}>
 
-        <View>
-          
-          <Text>{movie?.title}</Text>
-          
-        </View>
+      <Text style={styles.title}>{movie?.title}</Text>
 
-        <Image
-          source={{ uri: movie?.imgUrl }}
-          style={{ width: 140, height: 140, margin: 16 }}
-        />
+      <Image
+        source={{ uri: movie?.imgUrl }}
+        style={styles.image}
+      />
 
-        <View>
-          
-          <Text>{movie?.year}</Text>
+      <View style={styles.textContainer}>
+        
+        <Text style={styles.year}>{movie?.year}</Text>
 
-          <Text>{movie?.subTitle}</Text>
-
-        </View>
-
-        <View>
-          
-          <Text>{movie?.synopsis}</Text>
-          
-        </View>
+        <Text style={styles.subtitle}>{movie?.subTitle}</Text>
 
       </View>
+
+      <Text style={styles.sinopseTitle}>Sinopse</Text>
+
+      <View style={styles.sinopseContainer}>
+
+        <Text style={styles.sinopseText}>{movie?.synopsis}</Text>
+
+      </View>
+
+    </View>
 
   );
 }

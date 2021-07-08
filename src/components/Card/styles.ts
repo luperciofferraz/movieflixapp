@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
         marginHorizontal: 20,
         padding: 10,
         borderWidth: 1,
-        borderColor: theme.colors.branco,
+        borderColor: theme.colors.borderDetailsColor,
         borderRadius: 10,
         marginTop: 10,
         marginBottom: 20

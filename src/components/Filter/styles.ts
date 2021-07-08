@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
     pickerContainer: {
 
         backgroundColor: theme.colors.cinzaMedio,
-        borderColor: theme.colors.branco,
         borderRadius: 10,
         padding: 20
     },
@@ -19,7 +18,7 @@ export const styles = StyleSheet.create({
 
         backgroundColor: theme.colors.cinzaMedio,
         borderWidth: 1,
-        borderColor: theme.colors.branco,
+        borderColor: theme.colors.borderDetailsColor,
         borderRadius: 10,
         padding: 2
 
