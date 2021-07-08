@@ -30,27 +30,33 @@ export function Filter({ handleChangeGenre }: Props) {
     return (
 
         <View style={styles.pickerContainer}> 
-            <Picker
-                
-                style={styles.picker}
-                selectedValue={selectedGenre}
-                onValueChange={(itemValue) => {
-                    setSelectedGenre(itemValue);
-                    handleChangeGenre(itemValue);
-                }
-                }>
-                
-                <Picker.Item key={0} label='Selecione' value={0} />
 
-                {
-                    genres.map( genre => (
-                        
-                        <Picker.Item key={genre.id} label={genre.name} value={genre} />
+            <View style={styles.pickerBorder}> 
+            
+                <Picker
+                    
+                    style={styles.picker}
+                    selectedValue={selectedGenre}
+                    onValueChange={(itemValue) => {
+                        setSelectedGenre(itemValue);
+                        handleChangeGenre(itemValue);
+                    }
+                    }>
+                    
+                    <Picker.Item key={0} label='Selecione o Gênero' value={0} />
 
-                    ))
-                }   
+                    {
+                        genres.map( genre => (
+                            
+                            <Picker.Item key={genre.id} label={genre.name} value={genre} />
 
-            </Picker>
+                        ))
+                    }   
+
+                </Picker>
+
+            </View>
+
         </View>
 
     );
