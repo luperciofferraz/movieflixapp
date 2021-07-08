@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Movie, Review } from '../../types';
 import { makePrivateRequest } from '../../services/requests';
-import { isAllowedByRole } from '../../services/auth';
 import { DetailCard } from '../../components/DetailCard';
 import { Form } from '../../components/Form';
 
@@ -15,20 +14,16 @@ export function Details() {
 
     const [listaReviews, setListaReviews] = useState<Review[]>();
     const [movie, setMovie] = useState<Movie>();
-    const [description, setDescription] = useState('');
 
     const route = useRoute();
     const { movieId } = route.params as ParamsType;
 
     const getReviews = useCallback(() => {
 
-        console.warn(movieId);
-
         makePrivateRequest({ url: `/movies/${movieId}` })
         
         .then(response => 
             {
-                console.log(response.data);
                 setMovie(response.data);
                 setListaReviews(response.data.reviews);
             }

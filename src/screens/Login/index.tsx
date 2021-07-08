@@ -14,7 +14,6 @@ export function Login() {
   const navigation = useNavigation();
 
   const [hidePassword, setHidePassword] = useState(true);
-  
   const [userInfo, setUserInfo] = useState({
     username: "",
     password: "",

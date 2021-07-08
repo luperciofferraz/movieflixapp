@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Button, Text } from 'react-native'; 
 import { makePrivateRequest } from '../../services/requests';
 import { useForm, Controller } from 'react-hook-form';
@@ -27,29 +27,24 @@ let listaRetorno: Review[];
 export function Form( {listaReviews, setListaReviews}: ParamsForm) {
 
     const { control, handleSubmit, formState: { errors } } = useForm();
-    const [ userIdentifcation, setUserIdentification ] = useState<number>();
-    
     const route = useRoute();
     const { movieId } = route.params as ParamsType;
 
-    const onSubmit = (data: ReviewData) => {
+    async function onSubmit(data: ReviewData) {
+
+        const { userId } = await getSessionData();
 
         data.movieId = parseInt(movieId);
-        
-        getSessionData().then(result => {
-            
-            data.userId = result.userId;
-            
-            makePrivateRequest({ url: '/reviews', method: 'POST', data })
-            .then(response => 
-                {
-                    listaRetorno = [];
-                    listaReviews?.map(review => listaRetorno.push(review));
-                    listaRetorno.push(response.data);
-                    setListaReviews(listaRetorno);
-                });        
-    
-        });
+        data.userId = userId;
+
+        makePrivateRequest({ url: '/reviews', method: 'POST', data })
+        .then(response => 
+        {
+                listaRetorno = [];
+                listaReviews?.map(review => listaRetorno.push(review));
+                listaRetorno.push(response.data);
+                setListaReviews(listaRetorno);
+        }).catch(response => { console.log('ERRO') });
 
     };
 
@@ -72,7 +67,7 @@ export function Form( {listaReviews, setListaReviews}: ParamsForm) {
             value={value}
           />
         )}
-        name="review"
+        name="text"
         defaultValue=""
       />
       
