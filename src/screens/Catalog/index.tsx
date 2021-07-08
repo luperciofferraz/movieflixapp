@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList, View
 } from "react-native";
-import { makeRequest } from '../../services/requests';
+import { makeRequest } from '../../services/auth';
 import { Filter } from '../../components/Filter';
 
 import { Genre, MoviesResponse } from '../../types'
 import { Card } from '../../components/Card';
+import { styles } from './styles';
 
 export function Catalog() {
 
@@ -41,7 +42,7 @@ export function Catalog() {
 
     return    (
 
-        <View>
+        <View style={styles.container}>
 
             <Filter 
                 handleChangeGenre={handleChangeGenre}

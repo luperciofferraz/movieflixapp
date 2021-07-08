@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Text, View, TouchableOpacity, Image, TextInput } from "react-native";
-import { login } from '../../services';
+import { login } from '../../services/auth';
 
 import eyesOpened from '../../assets/eyes-opened.png';
 import eyesClosed from '../../assets/eyes-closed.png';

@@ -3,6 +3,7 @@ import { Text, View, Image, TouchableOpacity, TouchableOpacityProps } from 'reac
 import { useNavigation } from "@react-navigation/native";
 import { styles } from './styles';
 import { Movie } from '../../types';
+import { RectButton } from 'react-native-gesture-handler';
 
 type Props = TouchableOpacityProps & {
     movie: Movie;
@@ -23,19 +24,21 @@ export function Card({ movie, ...rest } : Props) {
   return (
 
       
-      <View>
+      <View style={styles.container}>
       
         <Image
           source={{ uri: movie.imgUrl }}
-          style={{ width: 140, height: 140, margin: 16 }}
+          style={styles.image}
         />
 
-        <View>
-          <Text>{movie.title}</Text>
+        <View style={styles.textContainer}>
           
-          <Text>{movie.year}</Text>
+          <Text style={styles.title}>{movie.title}</Text>
+          
+          <Text style={styles.year}>{movie.year}</Text>
 
-          <Text>{movie.subTitle}</Text>
+          <Text style={styles.subtitle}>{movie.subTitle}</Text>
+
         </View>
 
         <TouchableOpacity 
@@ -43,7 +46,9 @@ export function Card({ movie, ...rest } : Props) {
           onPress={() => handleOnPress()}
           {...rest}
         >
-          <Text>VER DETALHES</Text>
+          
+          <Text style={styles.buttonText}>VER DETALHES</Text>
+
         </TouchableOpacity>
 
       </View>

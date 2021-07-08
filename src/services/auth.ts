@@ -1,9 +1,15 @@
 import jwtDecode from 'jwt-decode';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import queryString from "query-string";
+import axios, { AxiosRequestConfig } from 'axios';
+
+const BASE_URL = process.env.REACT_APP_BACKEND_URL ?? 'http://192.168.1.69:8080';
 
 export const TOKEN = "Basic bW92aWVmbGl4Om1vdmllZmxpeDEyMw==";
 
 export type Role = 'ROLE_VISITOR' | 'ROLE_MEMBER';
+
+export const DATABASE = '@movileflixapp:USER_DATA';
 
 export type LoginResponse = {
 
@@ -41,7 +47,7 @@ export async function userToken() {
 
 export async function getSessionData() {
 
-  const sessionData = await AsyncStorage.getItem('authData') ?? '{}';
+  const sessionData = await AsyncStorage.getItem(DATABASE) ?? '{}';
 
   const parsedSessionData = JSON.parse(sessionData);
 
@@ -51,7 +57,7 @@ export async function getSessionData() {
 
 export function saveSessionData(loginResponse: LoginResponse) {
 
-  setAsyncKeys('authData', JSON.stringify(loginResponse));
+  setAsyncKeys(DATABASE, JSON.stringify(loginResponse));
 
 }
 
@@ -103,13 +109,65 @@ export function removeSessionData() {
   
   try {
   
-    AsyncStorage.removeItem('authData');
+    AsyncStorage.removeItem(DATABASE);
     
   } catch (e) {
     
     console.warn(e);
 
   }
-
   
 }
+
+export function login(loginData: LoginData) {
+  
+  const headers = {
+    Authorization: TOKEN,
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+
+  const payload = queryString.stringify({ ...loginData, grant_type: "password" });
+  return makeRequest({ method: 'POST', url: '/oauth/token', data: payload, headers });
+}
+
+export function logout() {
+
+  removeSessionData();
+
+}
+
+axios.interceptors.response.use(
+                                
+  function (response) {
+    return response;
+  }, 
+  
+  function (error) {
+      if (error.response.status === 401) {
+         removeSessionData();
+      } 
+      return Promise.reject(error);
+  }
+);
+
+export const makeRequest = (params: AxiosRequestConfig) => {
+
+  return axios({
+    ...params,
+    baseURL: BASE_URL
+  })
+
+}
+
+export async function makePrivateRequest(params: AxiosRequestConfig) {
+
+  const sessionData = await getSessionData();
+
+  const headers = {'Authorization': `Bearer ${sessionData.access_token}`
+  
+}
+
+return makeRequest({ ...params, headers });
+
+}
+

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Button, Text } from 'react-native'; 
-import { makePrivateRequest } from '../../services/requests';
+import { makePrivateRequest } from '../../services/auth';
 import { useForm, Controller } from 'react-hook-form';
 import { useRoute } from '@react-navigation/native';
 import { getSessionData } from '../../services/auth';

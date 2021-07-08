@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {View, Text} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { styles } from './styles';
-import { makePrivateRequest } from '../../services/requests';
+import { makePrivateRequest } from '../../services/auth';
 import { Genre } from '../../types';
 
 type Props = {
@@ -29,27 +29,29 @@ export function Filter({ handleChangeGenre }: Props) {
 
     return (
 
-        <Picker
-            
-            selectedValue={selectedGenre}
-            mode='dropdown'
-            onValueChange={(itemValue) => {
-                setSelectedGenre(itemValue);
-                handleChangeGenre(itemValue);
-            }
-            }>
-            
-            <Picker.Item key={0} label='Selecione' value={0} />
+        <View style={styles.pickerContainer}> 
+            <Picker
+                
+                style={styles.picker}
+                selectedValue={selectedGenre}
+                onValueChange={(itemValue) => {
+                    setSelectedGenre(itemValue);
+                    handleChangeGenre(itemValue);
+                }
+                }>
+                
+                <Picker.Item key={0} label='Selecione' value={0} />
 
-            {
-                genres.map( genre => (
-                    
-                    <Picker.Item key={genre.id} label={genre.name} value={genre} />
+                {
+                    genres.map( genre => (
+                        
+                        <Picker.Item key={genre.id} label={genre.name} value={genre} />
 
-                ))
-            }   
+                    ))
+                }   
 
-        </Picker>
+            </Picker>
+        </View>
 
     );
 

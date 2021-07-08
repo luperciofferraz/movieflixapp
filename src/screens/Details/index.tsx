@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Movie, Review } from '../../types';
-import { makePrivateRequest } from '../../services/requests';
+import { makePrivateRequest } from '../../services/auth';
 import { DetailCard } from '../../components/DetailCard';
 import { Form } from '../../components/Form';
 import { SafeAreaView } from 'react-native-safe-area-context';
