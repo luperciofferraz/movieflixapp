@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Movie, Review } from '../../types';
 import { makePrivateRequest } from '../../services/auth';
 import { DetailCard } from '../../components/DetailCard';
 import { Form } from '../../components/Form';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import StarImage from '../../assets/star.svg';
 import { styles } from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -28,6 +28,8 @@ export function Details() {
         .then(response => 
             {
                 setMovie(response.data);
+                console.log(response.data);
+                console.log(response.data.reviews);
                 setListaReviews(response.data.reviews);
             }
         )
@@ -53,33 +55,42 @@ export function Details() {
                 setListaReviews = {setListaReviews}
             />
 
-            {listaReviews?.length ?
 
-                <View>
 
-                    <FlatList
-                        data={listaReviews}
-                        keyExtractor={ item => item.id.toString()}
-                        renderItem={ ({ item }) => (
-                            <View key={item.id}>
-                                <View>
-                                    <Text>
-                                        {item.user.name}
-                                    </Text>
+            {listaReviews?.length ? 
+
+                <View style={styles.reviewCard}>
+                
+                    <Text style={styles.reviewTitle}>Avaliações</Text>
+
+                    {listaReviews?.map( review => (
+                        
+                        <View key={review.id}>
+                            
+                            <View style={styles.movieReviewsAutor}>
+                                <View style={styles.movieReviewsStarImage}>
+                                    <StarImage />
                                 </View>
-                                <Text>
-                                    {item.text}
+                                <Text style={styles.movieReviewsAutorName}>
+                                    {review.user.name}
                                 </Text>
                             </View>
-                        )}
-                        showsVerticalScrollIndicator={true}
-                    />
+                            <Text style={styles.movieReviewsText}>
+                                {review.text}
+                            </Text>
 
+                        </View>
+                    ))}
+                
                 </View>
+                
+                :
 
-                : <></>
+                <></>
+            } 
 
-            }
+            
+            
 
         </ScrollView>
 
