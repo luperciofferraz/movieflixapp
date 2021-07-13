@@ -37,6 +37,19 @@ export type LoginData = {
 
 }
 
+export async function isAllowedByRole(routeRoles: Role[] = []) {
+
+  if (routeRoles.length === 0) {
+
+      return true;
+  }
+
+  const { authorities } = await getAccessTokenDecoded();
+
+  return routeRoles.some( role => authorities?.includes(role));
+
+}
+
 export async function userToken() {
   
   const { access_token } = await getSessionData();

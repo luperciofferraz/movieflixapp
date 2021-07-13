@@ -7,6 +7,7 @@ import { Form } from '../../components/Form';
 import { styles } from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Reviews } from '../../components/Reviews';
+import { isAllowedByRole } from '../../services/auth';
 
 type ParamsType = {
     movieId: string;
@@ -15,10 +16,19 @@ type ParamsType = {
 export function Details() {
 
     const [listaReviews, setListaReviews] = useState<Review[]>();
+    const [canPostReview, setCanPostReview] = useState(false);
     const [movie, setMovie] = useState<Movie>();
 
     const route = useRoute();
     const { movieId } = route.params as ParamsType;
+
+    async function handleCanPostReview() {
+
+        const result = await isAllowedByRole(['ROLE_MEMBER']);
+
+        result ? setCanPostReview(true) : setCanPostReview(false);
+
+    }
 
     const getReviews = useCallback(() => {
 
@@ -39,6 +49,12 @@ export function Details() {
 
     },  [getReviews]);
 
+    useEffect(() => {
+
+        handleCanPostReview();
+
+    },  []);
+
     return (
 
         <ScrollView 
@@ -49,10 +65,14 @@ export function Details() {
                 movie={movie}
             />
 
-            <Form 
-                listaReviews = {listaReviews}
-                setListaReviews = {setListaReviews}
-            />
+            {canPostReview &&            
+
+                <Form 
+                    listaReviews = {listaReviews}
+                    setListaReviews = {setListaReviews}
+                />
+
+            }
 
             {listaReviews?.length ? 
 
