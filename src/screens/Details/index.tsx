@@ -5,9 +5,9 @@ import { Movie, Review } from '../../types';
 import { makePrivateRequest } from '../../services/auth';
 import { DetailCard } from '../../components/DetailCard';
 import { Form } from '../../components/Form';
-import StarImage from '../../assets/star.svg';
 import { styles } from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Reviews } from '../../components/Reviews';
 
 type ParamsType = {
     movieId: string;
@@ -28,9 +28,7 @@ export function Details() {
         .then(response => 
             {
                 setMovie(response.data);
-                console.log(response.data);
-                console.log(response.data.reviews);
-                setListaReviews(response.data.reviews);
+                setListaReviews(response.data.reviews.reverse());
             }
         )
 
@@ -55,42 +53,16 @@ export function Details() {
                 setListaReviews = {setListaReviews}
             />
 
-
-
             {listaReviews?.length ? 
 
-                <View style={styles.reviewCard}>
-                
-                    <Text style={styles.reviewTitle}>Avaliações</Text>
-
-                    {listaReviews?.map( review => (
-                        
-                        <View key={review.id}>
-                            
-                            <View style={styles.movieReviewsAutor}>
-                                <View style={styles.movieReviewsStarImage}>
-                                    <StarImage />
-                                </View>
-                                <Text style={styles.movieReviewsAutorName}>
-                                    {review.user.name}
-                                </Text>
-                            </View>
-                            <Text style={styles.movieReviewsText}>
-                                {review.text}
-                            </Text>
-
-                        </View>
-                    ))}
-                
-                </View>
+                <Reviews 
+                    listaReviews={listaReviews} 
+                />
                 
                 :
 
                 <></>
             } 
-
-            
-            
 
         </ScrollView>
 

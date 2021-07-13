@@ -28,14 +28,18 @@ let listaRetorno: Review[];
 
 export function Form( {listaReviews, setListaReviews}: ParamsForm) {
 
-    const { control, handleSubmit, formState: { errors } } = useForm();
+    const { control, handleSubmit, formState: { errors }, reset } = useForm();
     const route = useRoute();
     const { movieId } = route.params as ParamsType;
 
     async function onSubmit(data: ReviewData) {
 
-        const { userId } = await getSessionData();
+        reset({
+          text: '',
+        });
 
+        const { userId } = await getSessionData();
+        
         data.movieId = parseInt(movieId);
         data.userId = userId;
 
@@ -43,8 +47,8 @@ export function Form( {listaReviews, setListaReviews}: ParamsForm) {
         .then(response => {
           
           listaRetorno = [];
-          listaReviews?.map(review => listaRetorno.push(review));
           listaRetorno.push(response.data);
+          listaReviews?.forEach(review => listaRetorno.push(review));
           setListaReviews(listaRetorno);
           
         }).catch(response => { 
@@ -62,7 +66,8 @@ export function Form( {listaReviews, setListaReviews}: ParamsForm) {
         <Controller
           control={control}
           rules={{
-          maxLength: 100,
+            maxLength: 100,
+            required: 'true',
           }}
           render={({ field: { onChange, value } }) => (
             <TextArea 
