@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
 import { styles } from './styles';
 import { Review } from '../../types';
 import StarImage from '../../assets/star.svg';
@@ -16,24 +16,29 @@ export function Reviews({ listaReviews }: Props) {
                 
             <Text style={styles.reviewTitle}>Avaliações</Text>
 
-            {listaReviews?.map( review => (
-                
-                <View key={review.id}>
+            <FlatList
+                data={listaReviews}
+                keyExtractor={ item => item.id.toString()}
+                renderItem={ ({ item }) => (
+                    <View key={item.id}>
                     
                     <View style={styles.movieReviewsAutor}>
                         <View style={styles.movieReviewsStarImage}>
                             <StarImage />
                         </View>
                         <Text style={styles.movieReviewsAutorName}>
-                            {review.user.name}
+                            {item.user.name}
                         </Text>
                     </View>
                     <Text style={styles.movieReviewsText}>
-                        {review.text}
+                        {item.text}
                     </Text>
 
                 </View>
-            ))}
+
+                )}
+                showsVerticalScrollIndicator={false}
+            />
         
         </View>
 
