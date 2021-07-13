@@ -13,8 +13,8 @@ export const styles = StyleSheet.create({
     
     textContainer: {
         paddingTop: 35,
-        paddingHorizontal: 20,
-        flex: 1,
+        paddingLeft: 20,
+        paddingRight: 100,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
@@ -29,15 +29,15 @@ export const styles = StyleSheet.create({
     },
 
     textSair: {
+        marginLeft: 160,
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: theme.colors.preto,
         fontWeight: 'bold',
         fontSize: 14,
         lineHeight: 19,
         textAlign: 'center',
         letterSpacing: -0.015,
         color: theme.colors.preto,
-        borderWidth: 1,
-        borderRadius: 8,
-        borderColor: theme.colors.preto,
-        paddingHorizontal: 20
     }
 })
