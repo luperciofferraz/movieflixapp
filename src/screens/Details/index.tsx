@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, Image } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Movie, Review } from '../../types';
 import { makePrivateRequest } from '../../services/auth';
@@ -42,7 +41,9 @@ export function Details() {
 
     return (
 
-        <ScrollView style={styles.container}>
+        <ScrollView 
+            style={styles.container} 
+            keyboardShouldPersistTaps={'handled'}>
             
             <DetailCard 
                 movie={movie}

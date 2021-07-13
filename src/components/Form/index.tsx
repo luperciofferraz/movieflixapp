@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native'; 
+import { View, Text, KeyboardAvoidingView, Platform } from 'react-native'; 
 import { makePrivateRequest } from '../../services/auth';
 import { useForm, Controller } from 'react-hook-form';
 import { useRoute } from '@react-navigation/native';
@@ -85,10 +85,16 @@ export function Form( {listaReviews, setListaReviews}: ParamsForm) {
         
         {errors.review && <Text>This is required.</Text>}
 
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+        
         <Button 
           handleOnPress={handleSubmit(onSubmit)}
           text="SALVAR AVALIAÇÃO"
         />
+
+        </KeyboardAvoidingView>
 
       </View>
   );
