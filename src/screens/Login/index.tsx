@@ -25,17 +25,12 @@ export function Login() {
     
     try {
 
-      console.log(userInfo);
-      
       await signIn(userInfo);
-
       navigation.navigate('Catalog');
   
     } catch (error) {
-       
-      console.log(error); 
 
-      Alert.alert('E-mail ou Senha inválidos.');
+      Alert.alert('E-mail ou senha inválidos!');
 
     } 
 

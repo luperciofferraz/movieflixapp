@@ -49,8 +49,6 @@ function AuthProvider({ children } : AuthProviderProps) {
 
     async function signIn(loginData: LoginData) {
   
-        console.log('SignIN');
-
         const headers = {
           Authorization: TOKEN,
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -59,8 +57,6 @@ function AuthProvider({ children } : AuthProviderProps) {
         const payload = queryString.stringify({ ...loginData, grant_type: "password" });
         
         const response = await makeRequest({ method: 'POST', url: '/oauth/token', data: payload, headers });
-
-        console.log(response.data);
 
         saveSessionData(response.data);
 
