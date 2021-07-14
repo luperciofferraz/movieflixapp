@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList, View
 } from "react-native";
-import { makeRequest } from '../../services/auth';
+import { makeRequest } from '../../services/requests';
 import { Filter } from '../../components/Filter';
 
 import { Genre, MoviesResponse } from '../../types'

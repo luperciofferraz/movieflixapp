@@ -11,6 +11,13 @@ export type Role = 'ROLE_VISITOR' | 'ROLE_MEMBER';
 
 export const DATABASE = '@movileflixapp:USER_DATA';
 
+export type LoginData = {
+
+  username: string;
+  password: string;
+
+}
+
 export type LoginResponse = {
 
   access_token: string;
@@ -30,25 +37,19 @@ export type AccesToken = {
 
 }
 
-export type LoginData = {
-
-  username: string;
-  password: string;
-
-}
-
-export async function isAllowedByRole(routeRoles: Role[] = []) {
-
-  if (routeRoles.length === 0) {
-
-      return true;
+axios.interceptors.response.use(
+                                
+  function (response) {
+    return response;
+  }, 
+  
+  function (error) {
+      if (error.response.status === 401) {
+         removeSessionData();
+      } 
+      return Promise.reject(error);
   }
-
-  const { authorities } = await getAccessTokenDecoded();
-
-  return routeRoles.some( role => authorities?.includes(role));
-
-}
+);
 
 export async function userToken() {
   
@@ -110,14 +111,6 @@ export async function isTokenValid() {
 
 }
 
-export async function isAuthenticated() {
-
-  const sessionData = await getSessionData();
-
-  return sessionData.access_token && isTokenValid();
-
-}
-
 export function removeSessionData() {
   
   try {
@@ -132,43 +125,9 @@ export function removeSessionData() {
   
 }
 
-export function login(loginData: LoginData) {
-  
-  const headers = {
-    Authorization: TOKEN,
-    'Content-Type': 'application/x-www-form-urlencoded'
-  }
-
-  const payload = queryString.stringify({ ...loginData, grant_type: "password" });
-  return makeRequest({ method: 'POST', url: '/oauth/token', data: payload, headers });
-}
-
-export function logout() {
-
-  removeSessionData();
-
-}
-
-axios.interceptors.response.use(
-                                
-  function (response) {
-    return response;
-  }, 
-  
-  function (error) {
-      if (error.response.status === 401) {
-         removeSessionData();
-      } 
-      return Promise.reject(error);
-  }
-);
-
 export const makeRequest = (params: AxiosRequestConfig) => {
 
-  return axios({
-    ...params,
-    baseURL: BASE_URL
-  })
+  return axios({...params, baseURL: BASE_URL })
 
 }
 
@@ -176,11 +135,9 @@ export async function makePrivateRequest(params: AxiosRequestConfig) {
 
   const sessionData = await getSessionData();
 
-  const headers = {'Authorization': `Bearer ${sessionData.access_token}`
-  
-}
+  const headers = {'Authorization': `Bearer ${sessionData.access_token}`}
 
-return makeRequest({ ...params, headers });
+  return makeRequest({ ...params, headers });
 
 }
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {View, Text} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { styles } from './styles';
-import { makePrivateRequest } from '../../services/auth';
+import { makePrivateRequest } from '../../services/requests';
 import { Genre } from '../../types';
 
 type Props = {

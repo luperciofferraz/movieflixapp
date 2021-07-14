@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, KeyboardAvoidingView, Platform } from 'react-native'; 
-import { makePrivateRequest } from '../../services/auth';
+import { makePrivateRequest } from '../../services/requests';
 import { useForm, Controller } from 'react-hook-form';
 import { useRoute } from '@react-navigation/native';
-import { getSessionData } from '../../services/auth';
+import { getSessionData } from '../../services/requests';
 import { Review } from '../../types';
 import { TextArea } from '../../components/TextArea';
 import { styles } from './styles';

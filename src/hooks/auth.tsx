@@ -1,3 +1,5 @@
+import queryString from "query-string";
+
 import React, 
 { createContext,
   ReactNode,
@@ -6,11 +8,14 @@ import React,
   useEffect 
 } from 'react';
 
-import { getSessionData, LoginResponse, getAccessTokenDecoded, Role } from '../services/auth';
+import { getSessionData, LoginResponse, getAccessTokenDecoded, Role, LoginData, TOKEN, makeRequest, removeSessionData, saveSessionData, isTokenValid } from '../services/requests';
 
 type AuthContextData = {
     loginResponse: LoginResponse;
-    isAllowedByRole: () => Promise<boolean> ;
+    isAllowedByRole: (routeRoles: Role[]) => Promise<boolean> ;
+    signIn: (loginData: LoginData) => Promise<void>;
+    signOut: () => void;
+    isAuthenticated: () => Promise<boolean | "">;
 }
 
 type AuthProviderProps = {
@@ -37,12 +42,46 @@ function AuthProvider({ children } : AuthProviderProps) {
 
     async function loadUserStorageData() {
         
-        const loginData = await getSessionData();
+        const loginResponse = await getSessionData();
+        setLoginResponse(loginResponse);
 
-        console.log('Login Data Auth: ' + loginData);
-
-        setLoginResponse(loginData);
     }
+
+    async function signIn(loginData: LoginData) {
+  
+        console.log('SignIN');
+
+        const headers = {
+          Authorization: TOKEN,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+
+        const payload = queryString.stringify({ ...loginData, grant_type: "password" });
+        
+        const response = await makeRequest({ method: 'POST', url: '/oauth/token', data: payload, headers });
+
+        console.log(response.data);
+
+        saveSessionData(response.data);
+
+        setLoginResponse(response.data);
+    }
+      
+    function signOut() {
+      
+        setLoginResponse({} as LoginResponse);
+        removeSessionData();
+      
+    }
+
+    async function isAuthenticated() {
+
+        const sessionData = await getSessionData();
+      
+        return sessionData.access_token && isTokenValid();
+      
+    }
+      
 
     useEffect(() => {
         loadUserStorageData();
@@ -51,7 +90,10 @@ function AuthProvider({ children } : AuthProviderProps) {
     return (
         <AuthContext.Provider value = {{
             loginResponse,
-            isAllowedByRole
+            isAllowedByRole,
+            signIn,
+            signOut,
+            isAuthenticated
         }}>
 
             {children}

@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { Movie, Review } from '../../types';
-import { makePrivateRequest } from '../../services/auth';
+import { makePrivateRequest } from '../../services/requests';
 import { DetailCard } from '../../components/DetailCard';
 import { Form } from '../../components/Form';
 import { styles } from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Reviews } from '../../components/Reviews';
-import { isAllowedByRole } from '../../services/auth';
+import { useAuth } from '../../hooks/auth';
 
 type ParamsType = {
     movieId: string;
@@ -15,6 +15,8 @@ type ParamsType = {
 
 export function Details() {
 
+    const  { isAllowedByRole } = useAuth();
+    
     const [listaReviews, setListaReviews] = useState<Review[]>();
     const [canPostReview, setCanPostReview] = useState(false);
     const [movie, setMovie] = useState<Movie>();
@@ -24,9 +26,9 @@ export function Details() {
 
     async function handleCanPostReview() {
 
-        const result = await isAllowedByRole(['ROLE_MEMBER']);
+        const data = await isAllowedByRole(['ROLE_MEMBER']);
 
-        result ? setCanPostReview(true) : setCanPostReview(false);
+        setCanPostReview(data);
 
     }
 

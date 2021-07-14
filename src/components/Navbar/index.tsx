@@ -3,9 +3,11 @@ import {View, Text, TouchableOpacity} from 'react-native';
 
 import { useNavigation } from "@react-navigation/native";
 import { styles } from './styles';
-import { isAuthenticated, logout } from '../../services/auth';
+import { useAuth } from '../../hooks/auth';
 
 export function Navbar() {
+
+    const  { isAuthenticated, signOut } = useAuth();
 
     const [authenticated, setAuthenticated] = useState(true);
 
@@ -17,7 +19,7 @@ export function Navbar() {
     }
 
     function handleLogout() {
-        logout();
+        signOut();
         navigation.navigate('Home');
     }
 

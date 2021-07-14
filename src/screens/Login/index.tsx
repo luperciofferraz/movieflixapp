@@ -1,31 +1,43 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Text, View, TouchableOpacity, Image, TextInput } from "react-native";
-import { login } from '../../services/auth';
+import { Text, View, TouchableOpacity, Image, TextInput, Alert } from "react-native";
 
 import eyesOpened from '../../assets/eyes-opened.png';
 import eyesClosed from '../../assets/eyes-closed.png';
 import { ButtonIcon } from "../../components/ButtonIcon";
 import { styles } from "./styles";
-import { saveSessionData } from "../../services/auth";
+import { useAuth } from '../../hooks/auth';
 
 export function Login() {
   
+  const  { signIn } = useAuth();
+
   const navigation = useNavigation();
 
   const [hidePassword, setHidePassword] = useState(true);
+  
   const [userInfo, setUserInfo] = useState({
     username: "",
     password: "",
   });
 
-  function handleLogin() {
+  async function handleLogin() {
     
-    login(userInfo)
-      .then(response => {
-        saveSessionData(response.data);
-        navigation.navigate('Catalog');
-      });
+    try {
+
+      console.log(userInfo);
+      
+      await signIn(userInfo);
+
+      navigation.navigate('Catalog');
+  
+    } catch (error) {
+       
+      console.log(error); 
+
+      Alert.alert('E-mail ou Senha inválidos.');
+
+    } 
 
   }
 
