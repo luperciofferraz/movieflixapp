@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Text, View, TouchableOpacity, Image, TextInput, Alert } from "react-native";
-
+import { Text, View, TouchableOpacity, Image, TextInput } from "react-native";
+import Toast from "react-native-tiny-toast";
 import eyesOpened from '../../assets/eyes-opened.png';
 import eyesClosed from '../../assets/eyes-closed.png';
 import { ButtonIcon } from "../../components/ButtonIcon";
@@ -30,7 +30,7 @@ export function Login() {
   
     } catch (error) {
 
-      Alert.alert('E-mail ou senha inválidos!');
+      Toast.show('E-mail ou Senha inválidos!');
 
     } 
 
@@ -45,7 +45,7 @@ export function Login() {
         <View style={styles.form}>
           
           <TextInput
-            placeholder="Email"
+            placeholder="E-mail"
             autoCapitalize="none"
             keyboardType="email-address"
             style={styles.textInput}

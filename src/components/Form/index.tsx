@@ -44,7 +44,7 @@ export function Form( {listaReviews, setListaReviews}: ParamsForm) {
         data.movieId = parseInt(movieId);
         data.userId = userId;
 
-        if (data.text.trim().length===0) {
+        if (data.text.trim().length === 0) {
         
           Toast.show("Não há Avaliação para ser salva!");
 
