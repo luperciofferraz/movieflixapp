@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, KeyboardAvoidingView, Platform } from 'react-native'; 
+import Toast from "react-native-tiny-toast";
 import { makePrivateRequest } from '../../services/requests';
 import { useForm, Controller } from 'react-hook-form';
 import { useRoute } from '@react-navigation/native';
@@ -43,21 +44,37 @@ export function Form( {listaReviews, setListaReviews}: ParamsForm) {
         data.movieId = parseInt(movieId);
         data.userId = userId;
 
-        makePrivateRequest({ url: '/reviews', method: 'POST', data })
-        .then(response => {
-          
-          listaRetorno = [];
-          listaRetorno.push(response.data);
-          listaReviews?.forEach(review => listaRetorno.push(review));
-          setListaReviews(listaRetorno);
-          
-        }).catch(response => { 
+        if (data.text.trim().length===0) {
         
-          console.log('ERRO') 
+          Toast.show("Não há Avaliação para ser salva!");
 
-        });
+        }
+        else {
 
+          await sendReview(data);
+
+        }
     };
+
+    async function sendReview(data: ReviewData) {
+
+      makePrivateRequest({ url: '/reviews', method: 'POST', data })
+  
+      .then(response => {
+          
+        listaRetorno = [];
+        listaRetorno.push(response.data);
+        listaReviews?.forEach(review => listaRetorno.push(review));
+        setListaReviews(listaRetorno);
+        Toast.showSuccess("Avaliação salva com sucesso!");
+        
+      }).catch(response => { 
+        
+        Toast.show("Erro ao salvar Avaliação!");
+
+      });
+
+    }
 
     return (
 
@@ -66,8 +83,7 @@ export function Form( {listaReviews, setListaReviews}: ParamsForm) {
         <Controller
           control={control}
           rules={{
-            maxLength: 100,
-            required: 'true',
+            maxLength: 300
           }}
           render={({ field: { onChange, value } }) => (
             <TextArea 
