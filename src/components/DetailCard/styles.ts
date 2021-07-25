@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
         shadowColor: 'rgba(0, 0, 0, 0.25)',
         shadowOffset: { width: 0, height: 4 },
         shadowRadius: 2,
-        marginBottom: 20
+        marginBottom: 25
 
     },
 

@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 20,
         shadowRadius: 2,
-        marginBottom: 20
+        marginBottom: 25
 
     },
 

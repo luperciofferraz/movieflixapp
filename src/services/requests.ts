@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import queryString from "query-string";
 import axios, { AxiosRequestConfig } from 'axios';
 
-const BASE_URL = process.env.REACT_APP_BACKEND_URL ?? 'http://192.168.1.69:8080';
+const BASE_URL = process.env.REACT_APP_BACKEND_URL ?? 'https://lff-movieflix.herokuapp.com';
 
 export const TOKEN = "Basic bW92aWVmbGl4Om1vdmllZmxpeDEyMw==";
 
