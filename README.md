@@ -4,6 +4,10 @@
 
 Projeto de conclusão do Bootcamp Dev Superior (https://devsuperior.com.br)
 
+### Sobre o Projeto
+
+https://expo.dev/@luperciofferraz/movieflixapp
+
 O projeto consiste de um Sistema de catálogo de Filmes e seus respectivos Gêneros, onde usuários podem consultar o catálogo e, dependendo do perfil de acesso desse usuário, o mesmo pode, também, avaliar os Filmes do catálogo. O Código Fonte da Versão Web e do Back End estão no repositório https://github.com/luperciofferraz/movieflix.
 
 ![Mob1](https://github.com/luperciofferraz/Assets/blob/main/MFMobLogin01.jpg) ![Mob2](https://github.com/luperciofferraz/Assets/blob/main/MFMobLogin02.jpg) 
