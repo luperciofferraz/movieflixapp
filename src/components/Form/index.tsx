@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, KeyboardAvoidingView, Platform } from 'react-native'; 
+import { View, Text, KeyboardAvoidingView, Platform, Keyboard } from 'react-native'; 
 import Toast from "react-native-tiny-toast";
 import { makePrivateRequest } from '../../services/requests';
 import { useForm, Controller } from 'react-hook-form';
@@ -66,6 +66,7 @@ export function Form( {listaReviews, setListaReviews}: ParamsForm) {
         listaRetorno.push(response.data);
         listaReviews?.forEach(review => listaRetorno.push(review));
         setListaReviews(listaRetorno);
+        Keyboard.dismiss();
         Toast.showSuccess("Avaliação salva com sucesso!");
         
       }).catch(response => { 
